@@ -20,7 +20,7 @@ public class LoginClass1 {
     String result = "";
     
     // Check username validity
-    if (!registerUser.checkUserName()) {
+    if (registerUser.checkUserName()) {
         result += "Username successfully captured.";
     } else {
         result += "Username is not correctly formatted. Please ensure that your username contains an underscore and is no more than 5 characters in length.";
@@ -42,12 +42,12 @@ public class LoginClass1 {
     }
 
     // Method to inform a user of their login status
-    public String returnLoginStatus(boolean loginSuccessful) {
-        if (loginSuccessful) {
-            return "Welcome " + registerUser.getFirstName() + registerUser.getLastName() + ", it is great to see you again.";
-        } else {
-            return "Username or password incorrect, please try again.";
-        }
+   public String returnLoginStatus(boolean loginSuccessful) {
+    if (loginSuccessful) {
+        // Add a space between firstName and lastName
+        return "Welcome " + registerUser.getFirstName() + " " + registerUser.getLastName() + ", it is great to see you again.";
+    } else {
+        return "Username or password incorrect, please try again.";
     }
+ }
 }
-

@@ -15,45 +15,42 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Thandwa
  */
 public class UnitTest {
-    
-    public UnitTest() {
+
+    @Test
+    public void testCorrectUsernameFormat() {
+        UserClass user = new UserClass("kyl_1", "Ch&&sec@ke99!", "Kyle", "Smith");
+        assertTrue(user.checkUserName());
     }
 
-    @org.junit.jupiter.api.BeforeAll
-    public static void setUpClass() throws Exception {
+    @Test
+    public void testIncorrectUsernameFormat() {
+        UserClass user = new UserClass("kyle!!!!!!", "Ch&&sec@ke99!", "Kyle", "Smith");
+        assertFalse(user.checkUserName());
     }
 
-    @org.junit.jupiter.api.AfterAll
-    public static void tearDownClass() throws Exception {
+    @Test
+    public void testPasswordComplexitySuccess() {
+        UserClass user = new UserClass("kyl_1", "Ch&&sec@ke99!", "Kyle", "Smith");
+        assertTrue(user.checkPasswordComplexity());
     }
 
-    @org.junit.jupiter.api.BeforeEach
-    public void setUp() throws Exception {
+    @Test
+    public void testPasswordComplexityFailure() {
+        UserClass user = new UserClass("kyl_1", "password", "Kyle", "Smith");
+        assertFalse(user.checkPasswordComplexity());
+    }
+    
+    @Test
+    public void testLoginSuccess() {
+        UserClass user = new UserClass("kyl_1", "Ch&&sec@ke99!", "Kyle", "Smith");
+        LoginClass login = new LoginClass(user);
+        assertTrue(login.loginUser("kyl_1", "Ch&&sec@ke99!"));
     }
 
-    @org.junit.jupiter.api.AfterEach
-    public void tearDown() throws Exception {
+    @Test
+    public void testLoginFailure() {
+        UserClass user = new UserClass("kyl_1", "Ch&&sec@ke99!", "Kyle", "Smith");
+        LoginClass login = new LoginClass(user);
+        assertFalse(login.loginUser("kyl_1", "wrongPassword"));
     }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }

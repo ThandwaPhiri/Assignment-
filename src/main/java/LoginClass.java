@@ -19,7 +19,7 @@ public class LoginClass {
     String result = "";
     
     // Check username validity
-    if (!registeredUser.checkUserName()) {
+    if (registeredUser.checkUserName()) {
         result += "Username successfully captured.";
     } else {
         result += "Username is not correctly formatted. Please ensure that your username contains an underscore and is no more than 5 characters in length.";
