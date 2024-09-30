@@ -37,10 +37,10 @@ public class PROG_A1_ST10449515_P1 {
         System.out.println("Enter your Last Name: ");
         lastName = scanner.nextLine();
         
-        // Create a new user object
+        // Here we create a new user object
         UserClass1 user = new UserClass1(Username, Password, firstName, lastName);
         
-        // Create a new Login handler
+        // Here we create a new Login handler
         LoginClass1 loginHandler = new LoginClass1(user);
         
         // Attempt to register the user
