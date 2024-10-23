@@ -3,7 +3,6 @@
  */
 
 package com.mycompany.prog_a1_st10449515_p1;
-import java.util.*;
 import javax.swing.JOptionPane;
 
 
@@ -11,72 +10,60 @@ import javax.swing.JOptionPane;
  *
  * @author Thandwa
  */
+
+
 public class PROG_A1_ST10449515_P1 {
-    
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        register registerObj = new register(); 
-        
+        register registerObj = new register(); // Create a register object
+
         // Declarations
         String Username;
         String Password;
         String firstName;
         String lastName;
-        
-       
-        
-        // Prompting the user to enter their Username
-        System.out.println("Create a username: ");
-        Username = sc.next();
-        
+
+        // Prompting the user to enter their Username using JOptionPane
+        Username = JOptionPane.showInputDialog("Create a username (at least 5 characters and must contain an underscore):");
+
         // Check if the username is valid
         while (!registerObj.checkUsername(Username)) {
-            System.out.println("Error: Username must be at least 5 characters long and contain an underscore (_). Please try again.");
-            System.out.println("Create a username: ");
-            Username = sc.next();
+            JOptionPane.showMessageDialog(null, "Error: Username must be at least 5 characters long and contain an underscore (_). Please try again.");
+            Username = JOptionPane.showInputDialog("Create a username (at least 5 characters and must contain an underscore):");
         }
-        System.out.println("Username successfully captured.");
-        
-        // Prompting the user to enter their Password
-        System.out.println("Create a password: ");
-        Password = sc.next();
-        
+        JOptionPane.showMessageDialog(null, "Username successfully captured.");
+
+        // Prompting the user to enter their Password using JOptionPane
+        Password = JOptionPane.showInputDialog("Create a password (at least 8 characters, must contain a number, a capital letter, and a special character):");
+
         // Check if the password is valid
         while (!registerObj.checkPassword(Password)) {
-            System.out.println("Error: Password must be at least 8 characters long, contain a number, a capital letter, and a special character. Please try again.");
-            System.out.println("Create a password: ");
-            Password = sc.next();
+            JOptionPane.showMessageDialog(null, "Error: Password must be at least 8 characters long, contain a number, a capital letter, and a special character. Please try again.");
+            Password = JOptionPane.showInputDialog("Create a password (at least 8 characters, must contain a number, a capital letter, and a special character):");
         }
-        System.out.println("Password successfully captured.");
-            System.out.println("Enter your firstNamr: ");
-            firstName = sc.next();
-            
-            System.out.println("Enter your lastName: ");
-            lastName = sc.next();
-            
-            
-            //Set the userName and Password
-            registerObj.setUsername(Username);
-            registerObj.setPassword(Password);
-            
-            System.out.println("Enter your Username to login: ");
-            Username = sc.next();
-            
-            System.out.println("Enter your Password to login: ");
-            Password = sc.next();
-            
-            
-            //Attempt to login in with the registered credentials
-            boolean isLoginSuccessful = register.loginUser(Username, Password, registerObj.getUsername(), registerObj.getPassword());
-            System.out.println(register.returnLoginStatus(isLoginSuccessful,firstName, lastName));
-           
+        JOptionPane.showMessageDialog(null, "Password successfully captured.");
+
+        // Prompting the user to enter their first and last name
+        firstName = JOptionPane.showInputDialog("Enter your first name:");
+        lastName = JOptionPane.showInputDialog("Enter your last name:");
+
+        // Register the Username and Password in the register object
+        registerObj.registerUser(Username, Password);
+
+        // Prompt for login using JOptionPane
+        Username = JOptionPane.showInputDialog("Enter your Username to login:");
+        Password = JOptionPane.showInputDialog("Enter your Password to login:");
+
+        // Attempt to log in with the registered credentials
+        boolean isLoginSuccessful = registerObj.loginUser(Username, Password);
         
-    
-    if (isLoginSuccessful) {
-            Tasks taskObj = new Tasks();
+        // Show login status message
+        String loginStatus = registerObj.returnLoginStatus(isLoginSuccessful, firstName, lastName);
+        JOptionPane.showMessageDialog(null, loginStatus);
+
+        // If login is successful, show the Tasks menu
+        if (isLoginSuccessful) {
+            new Tasks(); // This will display the EasyKanban menu
         }
-        
-        // Close the Scanner
-        sc.close();
     }
 }

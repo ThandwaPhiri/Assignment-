@@ -3,87 +3,67 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.prog_a1_st10449515_p1;
-import java.util.Scanner;
+
 /**
  *
  * @author Thandwa
  */
+
+
 public class register {
-    private String Username;
-    private String Password;
-    
-    public register(){
-         this.Username = Username;
-         this.Password = Password;
+    private String Username;  // Private field
+    private String Password;  // Private field
+
+    // Method to check if the Username is valid
+    public boolean checkUsername(String Username) {
+        // Username must contain an underscore and be at least 5 characters long
+        return Username.contains("_") && Username.length() >= 5;
     }
-    
-    //Getter for Username
-    public String getUsername(){
-        return Username;
-    }
-    
-    //Setter for Username
-    public void setUsername(String Username){
-        this.Username = Username;
-    }
-    
-    //Getter for Password
-    public String getPassword(){
-        return Password;
-    }
-    
-    //Setter for Password
-    public void setPassword(String Paswword){
-        this.Password = Password;
-    }
-   
-    //Check if the Username is valid
-    public boolean checkUsername(String Username){
-        //Check if the username contains "-" and is no more than 5 characters
-        return Username.contains("_")&& Username.length() <= 5;
-        
-    }
-    
-    public boolean checkPassword(String Password){
+
+    // Method to check if the Password is valid
+    public boolean checkPassword(String Password) {
         boolean hasDigit = false;
-        boolean hasCapital =false;
-        boolean hasSpecial =false;
-        boolean isLong = Password.length() >= 8;
+        boolean hasCapital = false;
+        boolean hasSpecial = false;
+        boolean isLongEnough = Password.length() >= 8;
         
         String specialCharacters = "+=-_)(*&^%$#@!";
-        
-        //Check each character in the password for the required conditions
-        for(int i = 0; i < Password.length();i++){
-            char result = Password.charAt(i);
-            if(Character.isDigit(result)){
+
+        // Check each character in the password for the required conditions
+        for (int i = 0; i < Password.length(); i++) {
+            char character = Password.charAt(i);
+            if (Character.isDigit(character)) {
                 hasDigit = true;
             }
-            if (Character.isUpperCase(result)){
+            if (Character.isUpperCase(character)) {
                 hasCapital = true;
             }
-            if(specialCharacters.indexOf(result) >= 0){
+            if (specialCharacters.contains(String.valueOf(character))) {
                 hasSpecial = true;
             }
-             
         }
-        return hasDigit && hasCapital && hasSpecial && isLong;
-    }
-    
-//Method to log in the user
-  public static boolean loginUser(String enteredUsername, String enteredPassword, String storedUsername, String storedPassword){
-//Check if the provided credentials match the stored Username and Password
-  return enteredUsername.equals(storedUsername) && enteredPassword.equals(storedPassword);  
-}
-  
-//Public static method to return login success or failure message
-  public static String returnLoginStatus(boolean isSuccess, String firstName, String lastName){
-      if(isSuccess){
-          return "Welcome" + firstName + " " + lastName + ", it is great to see you again!";
-      }else{
-          return "Username or password validation failed.";
-      }
-  }
-}
 
-   
-    
+        return isLongEnough && hasDigit && hasCapital && hasSpecial;
+    }
+
+    // Method to register the user by setting the Username and Password
+    public void registerUser(String username, String password) {
+        this.Username = username;
+        this.Password = password;
+    }
+
+    // Method to log in the user
+    public boolean loginUser(String enteredUsername, String enteredPassword) {
+        // Check if the provided credentials match the stored Username and Password
+        return enteredUsername.equals(this.Username) && enteredPassword.equals(this.Password);
+    }
+
+    // Method to return login success or failure message
+    public String returnLoginStatus(boolean isSuccess, String firstName, String lastName) {
+        if (isSuccess) {
+            return "Welcome " + firstName + " " + lastName + ", it is great to see you again!";
+        } else {
+            return "Username or password validation failed.";
+        }
+    }
+}
