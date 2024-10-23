@@ -31,4 +31,5 @@
         <maven.compiler.target>22</maven.compiler.target>
         <exec.mainClass>com.mycompany.prog_a1_st10449515_p1.PROG_A1_ST10449515_P1</exec.mainClass>
     </properties>
+    <name>PROG_A1_ST10449515_POE</name>
 </project>
