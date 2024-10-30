@@ -28,7 +28,7 @@ public class Tasks {
 
         // Menu loop
         while (continueProgram) {
-            String choice = JOptionPane.showInputDialog(null, "Select an option:\n1) Add Tasks\n2) Show Report (Coming Soon)\n3) Quit");
+            String choice = JOptionPane.showInputDialog(null, "Select an option:\n1) Add Tasks\n2) Show Report \n3) Quit");
 
             try {
                 int option = Integer.parseInt(choice);
@@ -74,6 +74,9 @@ public class Tasks {
 
             // Add task to the list
             addTask(taskName, taskDescription, developerDetails, taskDuration, taskStatus);
+
+            // Display the details of the added task
+            JOptionPane.showMessageDialog(null, getTaskDetailsByIndex(taskCount - 1));
         }
 
         // Show total hours once all tasks are entered
