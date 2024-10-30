@@ -4,7 +4,7 @@
  */
 
 
-
+package com.mycompany.prog_a1_st10449515_p1;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
