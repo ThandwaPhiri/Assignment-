@@ -41,8 +41,7 @@ public class Tasks {
                         JOptionPane.showMessageDialog(null, "Coming Soon");
                         break;
                     case 3:
-                        quit();
-                        continueProgram = false;
+                        System.exit(0);
                         break;
                     default:
                         JOptionPane.showMessageDialog(null, "Invalid option. Please select a valid number.");
@@ -128,10 +127,6 @@ public class Tasks {
         return totalHours;
     }
 
-    // Method to quit the application
-    public void quit() {
-        JOptionPane.showMessageDialog(null, "Exiting the program. Goodbye!");
-    }
 
     // Inner class to represent a task
     private class Task {
