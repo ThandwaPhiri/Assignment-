@@ -126,7 +126,10 @@ public class Tasks {
     public int returnTotalHours() {
         return totalHours;
     }
-
+    
+    public String displayTaskWithLongestDuration(){
+        return "Longest";
+    }
 
     // Inner class to represent a task
     private class Task {
