@@ -1,0 +1,36 @@
+-------------------------------------------------------------------------------
+Test set: com.mycompany.prog_a1_st10449515_p1.TasksTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 80.16 s <<< FAILURE! -- in com.mycompany.prog_a1_st10449515_p1.TasksTest
+com.mycompany.prog_a1_st10449515_p1.TasksTest.testReturnTotalHours -- Time elapsed: 1.806 s <<< ERROR!
+java.lang.NumberFormatException: For input string: ""
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:565)
+	at java.base/java.lang.Integer.parseInt(Integer.java:685)
+	at com.mycompany.prog_a1_st10449515_p1.Tasks.<init>(Tasks.java:25)
+	at com.mycompany.prog_a1_st10449515_p1.TasksTest.setUp(TasksTest.java:23)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.mycompany.prog_a1_st10449515_p1.TasksTest.testAddTaskAndGetTaskDetailsByIndex -- Time elapsed: 1.617 s <<< ERROR!
+java.lang.NumberFormatException: For input string: ""
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:565)
+	at java.base/java.lang.Integer.parseInt(Integer.java:685)
+	at com.mycompany.prog_a1_st10449515_p1.Tasks.<init>(Tasks.java:25)
+	at com.mycompany.prog_a1_st10449515_p1.TasksTest.setUp(TasksTest.java:23)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
+com.mycompany.prog_a1_st10449515_p1.TasksTest.testCheckTaskDescription -- Time elapsed: 2.762 s <<< ERROR!
+java.lang.NumberFormatException: Cannot parse null string
+	at java.base/java.lang.Integer.parseInt(Integer.java:550)
+	at java.base/java.lang.Integer.parseInt(Integer.java:685)
+	at com.mycompany.prog_a1_st10449515_p1.Tasks.<init>(Tasks.java:25)
+	at com.mycompany.prog_a1_st10449515_p1.TasksTest.setUp(TasksTest.java:23)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
