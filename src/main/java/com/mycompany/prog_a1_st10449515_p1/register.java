@@ -18,8 +18,6 @@ public class register {
 
     /**
      * Validates the username format.
-     * 
-     * @param username the username to validate
      * @return true if valid, false otherwise
      */
     public boolean checkUserName(String username) {
@@ -28,8 +26,6 @@ public class register {
 
     /**
      * Validates password complexity.
-     * 
-     * @param password the password to validate
      * @return true if valid, false otherwise
      */
     public boolean checkPasswordComplexity(String password) {

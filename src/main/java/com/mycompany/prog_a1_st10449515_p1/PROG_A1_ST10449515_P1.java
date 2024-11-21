@@ -11,17 +11,14 @@ import javax.swing.JOptionPane;
  * @author Thandwa
  */
 
-/**
- * Main class to run the EasyKanban application.
- * Handles user registration, login, and launching the task management system.
- */
+
 public class PROG_A1_ST10449515_P1 {
 
     public static void main(String[] args) {
-        // Create a register object to handle user registration and login
+        // Here we create a register object to handle user registration and login
         register userRegistration = new register();
 
-        // Declare user details
+        // Here I declare user details
         String username;
         String password;
         String firstName;
