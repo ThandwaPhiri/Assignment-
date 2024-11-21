@@ -8,67 +8,76 @@ package com.mycompany.prog_a1_st10449515_p1;
  *
  * @author Thandwa
  */
+/**
+ * Handles user registration and login functionality.
+ */
 public class register {
-    private String username;  // Private field
-    private String password;  // Private field
 
-    // Method to check if the username is valid
+    private String registeredUsername; // Stores the registered username
+    private String registeredPassword; // Stores the registered password
+
+    /**
+     * Validates the username format.
+     * @return true if valid, false otherwise
+     */
     public boolean checkUserName(String username) {
-        // Username must contain an underscore and be at least 5 characters long
-        return username.contains("_") && username.length() <= 5;
+        return username.contains("_") && username.length() >= 5;
     }
 
-    // Method to check if the password meets complexity requirements
+    /**
+     * Validates password complexity.
+     * @return true if valid, false otherwise
+     */
     public boolean checkPasswordComplexity(String password) {
-        boolean hasDigit = false;
-        boolean hasCapital = false;
-        boolean hasSpecial = false;
-        boolean isLongEnough = password.length() >= 8;
-
-        String specialCharacters = "+=-_)(*&^%$#@!";
-
-        // Check each character in the password for the required conditions
-        for (int i = 0; i < password.length(); i++) {
-            char character = password.charAt(i);
-            if (Character.isDigit(character)) {
-                hasDigit = true;
-            }
-            if (Character.isUpperCase(character)) {
-                hasCapital = true;
-            }
-            if (specialCharacters.contains(String.valueOf(character))) {
-                hasSpecial = true;
-            }
-        }
-
-        return isLongEnough && hasDigit && hasCapital && hasSpecial;
+        boolean hasDigit = password.matches(".*\\d.*");
+        boolean hasUppercase = password.matches(".*[A-Z].*");
+        boolean hasSpecialChar = password.matches(".*[!@#$%^&*()].*");
+        return password.length() >= 8 && hasDigit && hasUppercase && hasSpecialChar;
     }
 
-    // Method to register the user by setting the username and password
+    /**
+     * Registers a user with a username and password.
+     * 
+     * @param username the username to register
+     * @param password the password to register
+     * @return a success or error message
+     */
     public String registerUser(String username, String password) {
         if (!checkUserName(username)) {
-            return "Username is not correctly formatted, please ensure that your username contains an underscore and is no more than 5 characters in length.";
+            return "Error: Invalid username format.";
         } else if (!checkPasswordComplexity(password)) {
-            return "Password is not correctly formatted, please ensure that the password contains at least 8 characters, a capital letter, a number and a special character.";
+            return "Error: Invalid password format.";
         } else {
-            this.username = username;
-            this.password = password;
-            return "User successfully registered";
+            this.registeredUsername = username;
+            this.registeredPassword = password;
+            return "User successfully registered!";
         }
     }
 
-    // Method to log in the user
-    public boolean loginUser(String enteredUsername, String enteredPassword) {
-        // Check if the provided credentials match the stored username and password
-        return enteredUsername.equals(this.username) && enteredPassword.equals(this.password);
+    /**
+     * Validates login credentials.
+     * 
+     * @param username the entered username
+     * @param password the entered password
+     * @return true if login is successful, false otherwise
+     */
+    public boolean loginUser(String username, String password) {
+        return username.equals(this.registeredUsername) && password.equals(this.registeredPassword);
     }
 
-    // Method to return login success or failure message
+    /**
+     * Returns a login status message.
+     * 
+     * @param isSuccess indicates if login was successful
+     * @param firstName the user's first name
+     * @param lastName the user's last name
+     * @return the status message
+     */
     public String returnLoginStatus(boolean isSuccess, String firstName, String lastName) {
         if (isSuccess) {
-            return "Welcome " + firstName + " " + lastName + ", it is great to see you again!";
+            return "Welcome " + firstName + " " + lastName + "! Great to see you again.";
         } else {
-            return "Username or password validation failed.";
+            return "Error: Login failed. Please check your username and password.";
         }
     }
 }
