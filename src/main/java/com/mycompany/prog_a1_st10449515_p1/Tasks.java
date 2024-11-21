@@ -11,40 +11,44 @@ import javax.swing.JOptionPane;
  */
 public class Tasks {
 
-    private int totalHours = 0; // To track the total hours of all tasks
-    private int taskCount = 0;  // For TaskID generation and task number
-    private int maxTasks;       // Maximum number of tasks user wishes to enter
-
-    // List to store each task's details
-    private ArrayList<Task> tasksList = new ArrayList<>();
+    private ArrayList<String> developers = new ArrayList<>();
+    private ArrayList<String> taskNames = new ArrayList<>();
+    private ArrayList<String> taskIDs = new ArrayList<>();
+    private ArrayList<Integer> taskDurations = new ArrayList<>();
+    private ArrayList<String> taskStatuses = new ArrayList<>();
 
     public Tasks() {
-        JOptionPane.showMessageDialog(null, "Welcome to EasyKanban");
-
-        // Allow user to specify the number of tasks
-        maxTasks = Integer.parseInt(JOptionPane.showInputDialog("How many tasks would you like to add?"));
+        JOptionPane.showMessageDialog(null, "Welcome to EasyKanban!");
 
         boolean continueProgram = true;
 
-        // Menu loop
         while (continueProgram) {
-            String choice = JOptionPane.showInputDialog(null, "Select an option:\n1) Add Tasks\n2) Show Report \n3) Quit");
+            String choice = JOptionPane.showInputDialog(null, "Select an option:\n" +
+                    "1) Add a Task\n" +
+                    "2) View Tasks by Status 'Done'\n" +
+                    "3) View Task with Longest Duration\n" +
+                    "4) Search Task by Name\n" +
+                    "5) Search Tasks by Developer\n" +
+                    "6) Delete Task by Name\n" +
+                    "7) Display Full Task Report\n" +
+                    "8) Exit");
 
             try {
                 int option = Integer.parseInt(choice);
 
                 switch (option) {
-                    case 1:
-                        addTasks();
-                        break;
-                    case 2:
-                        JOptionPane.showMessageDialog(null, "Coming Soon");
-                        break;
-                    case 3:
-                        System.exit(0);
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(null, "Invalid option. Please select a valid number.");
+                    case 1 -> addTask();
+                    case 2 -> displayTasksByStatus("Done");
+                    case 3 -> displayLongestTask();
+                    case 4 -> searchTaskByName();
+                    case 5 -> searchTasksByDeveloper();
+                    case 6 -> deleteTaskByName();
+                    case 7 -> displayFullTaskReport();
+                    case 8 -> {
+                        JOptionPane.showMessageDialog(null, "Exiting EasyKanban. Goodbye!");
+                        continueProgram = false;
+                    }
+                    default -> JOptionPane.showMessageDialog(null, "Invalid option. Please select a valid number.");
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Please enter a valid number.");
@@ -52,103 +56,122 @@ public class Tasks {
         }
     }
 
-    // Method to add tasks based on the user-defined task limit
-    public void addTasks() {
-        for (int i = 0; i < maxTasks; i++) {
-            String taskName = JOptionPane.showInputDialog("Enter the task name:");
-            String taskDescription;
+    private void addTask() {
+        String taskName = JOptionPane.showInputDialog("Enter the task name:");
 
-            // Task Description
-            do {
-                taskDescription = JOptionPane.showInputDialog("Enter task description (max 50 characters):");
-            } while (!checkTaskDescription(taskDescription));
-
-            String developerDetails = JOptionPane.showInputDialog("Enter developer's first and last name:");
-            int taskDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter task duration in hours:"));
-            String taskStatus = JOptionPane.showInputDialog("Select task status:\n1) To Do\n2) Doing\n3) Done");
-
-            // Increment task count for ID generation
-            taskCount++;
-            String taskID = createTaskID(taskName, taskCount, developerDetails);
-
-            // Add task to the list
-            addTask(taskName, taskDescription, developerDetails, taskDuration, taskStatus);
-
-            // Display the details of the added task
-            JOptionPane.showMessageDialog(null, getTaskDetailsByIndex(taskCount - 1));
-        }
-
-        // Show total hours once all tasks are entered
-        JOptionPane.showMessageDialog(null, "Total hours of all tasks: " + returnTotalHours() + " hours");
-    }
-
-    // Method to validate task description length
-    public boolean checkTaskDescription(String description) {
-        if (description.length() <= 50) {
-            JOptionPane.showMessageDialog(null, "Task successfully captured.");
-            return true;
-        } else {
-            JOptionPane.showMessageDialog(null, "Please enter a task description of less than 50 characters.");
-            return false;
-        }
-    }
-
-    // Method to generate Task ID
-    public String createTaskID(String taskName, int taskNumber, String developer) {
-        return taskName.substring(0, 2).toUpperCase() + ":" + taskNumber + ":" +
-               developer.substring(developer.length() - 3).toUpperCase();
-    }
-
-    // Method to add a task to the list
-    public void addTask(String taskName, String taskDescription, String developerDetails, int duration, String status) {
-        String taskID = createTaskID(taskName, taskCount, developerDetails);
-        tasksList.add(new Task(taskName, taskCount, taskDescription, developerDetails, duration, status, taskID));
-        totalHours += duration;
-    }
-
-    // Method to retrieve task details by index
-    public String getTaskDetailsByIndex(int taskIndex) {
-        if (taskIndex >= 0 && taskIndex < tasksList.size()) {
-            Task task = tasksList.get(taskIndex);
-            return "Task Details:\n" +
-                   "Status: " + task.status + "\n" +
-                   "Developer: " + task.developerDetails + "\n" +
-                   "Task Number: " + task.taskNumber + "\n" +
-                   "Task Name: " + task.taskName + "\n" +
-                   "Description: " + task.taskDescription + "\n" +
-                   "Task ID: " + task.taskID + "\n" +
-                   "Duration: " + task.taskDuration + " hours";
-        }
-        return "Invalid task index.";
-    }
-
-    // Method to return the total combined hours of all entered tasks
-    public int returnTotalHours() {
-        return totalHours;
-    }
-    
-    public String displayTaskWithLongestDuration(){
-        return "Longest";
-    }
-
-    // Inner class to represent a task
-    private class Task {
-        String taskName;
-        int taskNumber;
         String taskDescription;
-        String developerDetails;
-        int taskDuration;
-        String status;
-        String taskID;
+        do {
+            taskDescription = JOptionPane.showInputDialog("Enter task description (max 50 characters):");
+        } while (taskDescription.length() > 50);
 
-        Task(String taskName, int taskNumber, String taskDescription, String developerDetails, int taskDuration, String status, String taskID) {
-            this.taskName = taskName;
-            this.taskNumber = taskNumber;
-            this.taskDescription = taskDescription;
-            this.developerDetails = developerDetails;
-            this.taskDuration = taskDuration;
-            this.status = status;
-            this.taskID = taskID;
+        String developer = JOptionPane.showInputDialog("Enter developer's first and last name:");
+        int duration = Integer.parseInt(JOptionPane.showInputDialog("Enter task duration in hours:"));
+
+        String[] statusOptions = {"To Do", "Doing", "Done"};
+        String status = (String) JOptionPane.showInputDialog(null, "Select task status:",
+                "Task Status", JOptionPane.QUESTION_MESSAGE, null, statusOptions, statusOptions[0]);
+
+        String taskID = generateTaskID(taskName, developer);
+
+        developers.add(developer);
+        taskNames.add(taskName);
+        taskIDs.add(taskID);
+        taskDurations.add(duration);
+        taskStatuses.add(status);
+
+        JOptionPane.showMessageDialog(null, "Task successfully added!\nTask ID: " + taskID);
+    }
+
+    private String generateTaskID(String taskName, String developer) {
+        return taskName.substring(0, 2).toUpperCase() + ":" +
+                (taskNames.size() + 1) + ":" +
+                developer.substring(developer.length() - 3).toUpperCase();
+    }
+
+    private void displayTasksByStatus(String status) {
+        StringBuilder result = new StringBuilder("Tasks with status '" + status + "':\n\n");
+
+        for (int i = 0; i < taskStatuses.size(); i++) {
+            if (taskStatuses.get(i).equalsIgnoreCase(status)) {
+                result.append("Developer: ").append(developers.get(i)).append("\n")
+                        .append("Task Name: ").append(taskNames.get(i)).append("\n")
+                        .append("Duration: ").append(taskDurations.get(i)).append(" hours\n\n");
+            }
         }
+
+        JOptionPane.showMessageDialog(null, result.toString());
+    }
+
+    private void displayLongestTask() {
+        int longestIndex = 0;
+        for (int i = 1; i < taskDurations.size(); i++) {
+            if (taskDurations.get(i) > taskDurations.get(longestIndex)) {
+                longestIndex = i;
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, "Task with Longest Duration:\n" +
+                "Developer: " + developers.get(longestIndex) + "\n" +
+                "Task Name: " + taskNames.get(longestIndex) + "\n" +
+                "Duration: " + taskDurations.get(longestIndex) + " hours");
+    }
+
+    private void searchTaskByName() {
+        String taskName = JOptionPane.showInputDialog("Enter the task name to search for:");
+        int index = taskNames.indexOf(taskName);
+
+        if (index != -1) {
+            JOptionPane.showMessageDialog(null, "Task Found:\n" +
+                    "Developer: " + developers.get(index) + "\n" +
+                    "Task Name: " + taskNames.get(index) + "\n" +
+                    "Status: " + taskStatuses.get(index));
+        } else {
+            JOptionPane.showMessageDialog(null, "Task not found.");
+        }
+    }
+
+    private void searchTasksByDeveloper() {
+        String developer = JOptionPane.showInputDialog("Enter the developer's name to search for:");
+        StringBuilder result = new StringBuilder("Tasks for Developer '" + developer + "':\n\n");
+
+        for (int i = 0; i < developers.size(); i++) {
+            if (developers.get(i).equalsIgnoreCase(developer)) {
+                result.append("Task Name: ").append(taskNames.get(i)).append("\n")
+                        .append("Status: ").append(taskStatuses.get(i)).append("\n\n");
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, result.toString());
+    }
+
+    private void deleteTaskByName() {
+        String taskName = JOptionPane.showInputDialog("Enter the task name to delete:");
+        int index = taskNames.indexOf(taskName);
+
+        if (index != -1) {
+            developers.remove(index);
+            taskNames.remove(index);
+            taskIDs.remove(index);
+            taskDurations.remove(index);
+            taskStatuses.remove(index);
+
+            JOptionPane.showMessageDialog(null, "Task deleted successfully.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Task not found.");
+        }
+    }
+
+    private void displayFullTaskReport() {
+        StringBuilder report = new StringBuilder("Full Task Report:\n\n");
+
+        for (int i = 0; i < taskNames.size(); i++) {
+            report.append("Task ID: ").append(taskIDs.get(i)).append("\n")
+                    .append("Developer: ").append(developers.get(i)).append("\n")
+                    .append("Task Name: ").append(taskNames.get(i)).append("\n")
+                    .append("Duration: ").append(taskDurations.get(i)).append(" hours\n")
+                    .append("Status: ").append(taskStatuses.get(i)).append("\n\n");
+        }
+
+        JOptionPane.showMessageDialog(null, report.toString());
     }
 }
